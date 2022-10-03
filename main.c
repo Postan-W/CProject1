@@ -2,9 +2,11 @@
 
 int main() {
     int pay;
-    int price;
-    scanf("%d",&price);
+    const int PRICE = 100;
+    printf("价格是:%d\n",PRICE);
+    printf("付款:");
     scanf("%d",&pay);
-    printf("%d",pay - price);
+    printf("找零:");
+    printf("%d",pay - PRICE);
     return 0;
 }
