@@ -1,6 +1,10 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    int pay;
+    int price;
+    scanf("%d",&price);
+    scanf("%d",&pay);
+    printf("%d",pay - price);
     return 0;
 }
