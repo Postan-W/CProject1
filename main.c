@@ -34,6 +34,13 @@ int main() {
 
     //if或else不带大括号时后面一句属于它们
     if(c > d) d += 6;else d -= 6;
-    printf("d的值是:%d",d);
+    printf("d的值是:%d\n",d);
+
+    //sizeof()，返回参数占用的字节数。该函数只判断括号内的内容属于什么类型，然后返回占用内存大小，而内容本身并不会执行
+    int h = 10;
+    printf("sizeof(h++):%d\n",sizeof(h++));
+    printf("此时h的值:%d\n",h);
+    printf("sizeof(int):%d\n",sizeof(int));
+
     return 0;
 }
