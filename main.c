@@ -31,5 +31,9 @@ int main() {
     printf("此时c的值:%d\n",c);
     printf("++c的返回值:%d\n",++c);
     printf("此时c的值:%d\n",c);
+
+    //if或else不带大括号时后面一句属于它们
+    if(c > d) d += 6;else d -= 6;
+    printf("d的值是:%d",d);
     return 0;
 }
