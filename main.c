@@ -1,7 +1,46 @@
 #include <stdio.h>
 #include<stdlib.h>
-
+#include<string.h>
+typedef  long int64_t;//typedef的作用是设置别名，就是typedef后面跟着的内容用最后一个符号来命名。所以之后就可以用int64_t代替long来使用。
 void value_exchange(int *p1,int *p2);
+//有名结构体，可以用名字来创建变量
+struct date {
+    int year;
+    int month;
+    int day;
+};
+struct time{
+    int hour;
+    int minute;
+    int second;
+};
+//嵌套结构
+struct date_time{
+    struct date d;
+    struct time t;
+};
+struct date d1,d2;
+struct date d3 = {2022,9,30};
+struct date d4 = {.year=2022,.day=20};
+//无名结构体，所以在定义结构体的时候就创建属于该结构体的变量
+struct {
+    int width;
+    int height;
+}p1,p2;
+
+//设置别名。可以是无名结构体
+typedef struct house_struct{
+    int height;
+    int width;
+    int length;
+} House;
+
+//联合。union所有的元素共用一个内存空间，空间大小由最大的元素确定。也就是说同一时间只有一个元素占用那个空间，给其他元素赋值就会使得新值占用那个空间
+//当然，这里可以是无名union
+typedef union union_trial{
+    int i;
+    char ch[sizeof(int)];
+}U;
 
 void buy_something(){
     const int PRICE = 100;
@@ -191,8 +230,69 @@ void para_main(int argc,char const *argv[]){
         printf("%d:%s\n",i,argv[i]);//用%s进行输出，编译器会将argv[i]指向的char开始，直到\0结束的部分作为字符串
     }
 }
+void some_string_function(){
+    char str1[] = "hello";
+    printf("str1的长度:%d\n", strlen(str1));
+    char str2[] = "aelcome";
+    printf("str1与str2比较:%d", strcmp(str1,str2));//按照字母表顺序进行比较，结果可以看作str2-str1
+}
+
+//声明排列在一起的n的const int值用枚举比较方便。后面一个的值是前面一个值加一
+enum COLOR{RED,GREEN,YELLOW};//默认不赋值的情形，它们的值依次是0,1,2
+enum AGE{MICHAEL=21,TOM,JACK=30};//它们的值依次是21,22,30
+void print_enum(){
+    printf("%d\n",TOM);
+}
+
+void trial_on_struct(){
+    printf("d4日期:%d-%d-%d\n",d4.year,d4.month,d4.day);
+    d4 = d3;//把另一个struct变量里元素一次赋值给另一个
+    printf("d4日期:%d-%d-%d\n",d4.year,d4.month,d4.day);
+
+    struct date d5;
+    d5 = (struct date){2022,8,21};
+    struct date *d_point = &d5;//要用&符，因为结构的名字并不是地址，数组才是
+    struct date d6;
+    d6 = *d_point;//struct date类型的指针d_point所指的内存空间通过*得到其内容，即为struct date类型的一个结构体，也即是d5代表的那个结构体，将其值赋给d6
+    printf("d6日期:%d-%d-%d\n",d6.year,d6.month,d6.day);
+    //等同于
+    printf("d6日期:%d-%d-%d\n",(*d_point).year,(*d_point).month,(*d_point).day);
+    //等同于。这里引出了新的符号->
+    printf("d6日期:%d-%d-%d\n",d_point->year,d_point->month,d_point->day);
+
+    //结构数组
+    struct date dates[] = {{2022,1,22},{2022,2,23},{2022,3,24}};
+    printf("dates[1].month=%d\n",dates[1].month);
+
+    //嵌套结构
+    struct  date_time dt = {{2022,5,23},{22,18,34}};
+    printf("dt.d.month=%d\n",dt.d.month);
+
+    //使用别名
+    House h = {3,4,5};
+    printf("house的高:%d",h.height);
+}
+void trial_on_union(){
+    U u1;
+    u1.i = 8679;//此时i使用了空间，那么u1.ch里的内容就是i的内容，但是是以char ch[]的形式放置的
+    for(int i=0;i<sizeof(int);i++){
+        printf("%02hhX",u1.ch[i]);//以16进制输出。8679的十六进制是21E7，在x86架构中的存放是低位在前，所以会看到E7210000
+    }
+}
+//当前函数名称
+void f_name(void){
+    printf("%s",__func__ );
+}
+
+//静态本地变量在函数结束后仍然保持其值，但作用域仅限所在函数。所以静态本地变量是全局生命期，但局部作用域。
+void trial_on_static(void){
+    static int a = 1;
+    printf("%s:a=%d\n",__func__ ,a++);
+}
 int main(int argc,char const *argv[]) {
-    para_main(argc,argv);
+    trial_on_static();
+    trial_on_static();
+    trial_on_static();
     return 0;
 }
 
