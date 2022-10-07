@@ -156,18 +156,43 @@ void trial_on_malloc(){
     free(p);//释放内存
 }
 
-void trial_on_string(){
-    /*C语言中，字符串即为以\0结尾的字符数组,下面几种形式等同,双引号包含的叫作字符串常量，
-     * 之所以叫字符串常量，是因为所有的同名字符串都只是一个，换句话说都使用的是同一个内存空间的内容，并且是只读的。
-     * */
-    char str1[] = {'h','e','l','l','o','\0'};
-    char str2[] = "hello";
-    char str3[6] = "hello";
-    char *str = "hello";
+void constant_string(){
+    int *p = "hello";
+    printf("consta_string函数内部的hello的地址:%p\n",p);
 }
 
-int main() {
+void trial_on_string(){
+    /*C语言中，字符串即为以\0结尾的字符数组,下面几种形式等同。
+     * */
+    char str1[] = {'h','e','l','l','o','\0'};
+    char str2[] = "hello";//注意字符数组的长度是6，编译器将\0放在末尾
+    char str3[] = "hello";
+    printf("str2的地址:%p\n",str2);
+    printf("str3的地址:%p\n",str3);//二者是不一样的，因为二者是不同的局部变量
 
+    char *p1 = "hello";
+    char *p2= "hello";
+    printf("p1=%p\np2=%p\n",p1,p2);
+    constant_string();//三者是一样的，这是因为此时"hello""为字符串常量，后者叫字面量，全局只有一个，只读的。注意是程序全局，生命周期也与程序同在
+}
+void input_output_string(){
+    char string[8];
+    scanf("%7s",string);//读到空格、tab或者换行为止。这里指定了最多读7个字符，避免数组越界
+    printf("%s",string);
+
+
+}
+void para_main(int argc,char const *argv[]){
+    //输出参数。argc是参数个数,参数用空格分割，参数0是文件本身。argv是const指针数组，每个指针指向一个字符串，即参数。
+    for(int i=0;i<argc;i++){
+        printf("%d:%c\n",i,*argv[i]);//argv[i]实际上是指向第i个字符串第一个字母的指针
+    }
+    for(int i=0;i<argc;i++){
+        printf("%d:%s\n",i,argv[i]);//用%s进行输出，编译器会将argv[i]指向的char开始，直到\0结束的部分作为字符串
+    }
+}
+int main(int argc,char const *argv[]) {
+    para_main(argc,argv);
     return 0;
 }
 
