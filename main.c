@@ -1,8 +1,33 @@
+/*#开头的是编译预处理(编译之前)指令，不属于C语言本身*/
+//宏(macro)的替换就是文本替换，所以宏可以定义任意内容,可以换行。
+#define PI 3.14159 //编译预处理阶段，程序中的PI都会被替换成3.14159，PI被称作宏。这里直接在宏定义后面注释也是可以的，预处理阶段可以识别出这是注释
+#define PI2 2*PI //宏中可以包含宏。除了注释符号即双斜杠，定义时请注意所有内容均会被认为是宏的值，并用该值替换原代码使用的地方
+#define PRINT printf("%f\n",PI); \
+printf("%f\n",PI2);
+//有用的预定义宏有__LINE__,__DATE__,__TIME__,__FILE__等
+//带参数的宏。需要注意的是，因为预处理阶段宏只是纯粹地文本替换原代码中的使用的地方，所以要注意可能会产生的bug，原则是宏整体带括号(避免比如算术运算优先级的问题)，每个参数带括号(同上)
+#define RADIO2DEG(x) ((x)*57.29578)
+
+/*include也属于预处理指令，所做的事情就是简单地把.h即头文件里的内容从该行开始插入到该文件。
+ * 而.h里包含的就是宏定义、函数原型(不包含函数的具体实现)等。以#include <stdio.h>为例，因为其中包含
+ * printf的函数原型，编译器可以检查调用时传的参数是否正确。
+ *
+ *
+ *
+ * 一般的做法是每一个.c文件都对应其头文件.h，把对外公开的函数原型和全局变量的声明放进去。
+ * 不对外公开的函数和全局变量，可以在其前面加上static，这样只有当前.c文件中才能使用。
+ * */
 #include <stdio.h>
 #include<stdlib.h>
-#include<string.h>
+#include<string.h>//尖括号的话编译器直接到系统指定目录找
+#include "h1.h"//双引号的话编译器会先在当前目录找，找不到再到系统指定目录
 typedef  long int64_t;//typedef的作用是设置别名，就是typedef后面跟着的内容用最后一个符号来命名。所以之后就可以用int64_t代替long来使用。
 void value_exchange(int *p1,int *p2);
+void trial_on_macro(){
+    PRINT;
+    printf("%s  %s\n",__DATE__,__TIME__);
+    printf("%f\n", RADIO2DEG(2+3));//预处理后实际上是printf("%f",((2+3)*57.29578));这里反映出带括号的重要性
+}
 //有名结构体，可以用名字来创建变量
 struct date {
     int year;
@@ -19,7 +44,7 @@ struct date_time{
     struct date d;
     struct time t;
 };
-struct date d1,d2;
+struct date d1,d2;//这里d1,d2是全局的
 struct date d3 = {2022,9,30};
 struct date d4 = {.year=2022,.day=20};
 //无名结构体，所以在定义结构体的时候就创建属于该结构体的变量
@@ -290,9 +315,9 @@ void trial_on_static(void){
     printf("%s:a=%d\n",__func__ ,a++);
 }
 int main(int argc,char const *argv[]) {
-    trial_on_static();
-    trial_on_static();
-    trial_on_static();
+    int a = 10;
+    int b =15;
+    max_a_b(a,b);
     return 0;
 }
 

@@ -128,6 +128,30 @@ CProject1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CProject1.dir\build.make CMakeFiles/CProject1.dir/build
 .PHONY : CProject1/fast
 
+f.obj: f.c.obj
+.PHONY : f.obj
+
+# target to build an object file
+f.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CProject1.dir\build.make CMakeFiles/CProject1.dir/f.c.obj
+.PHONY : f.c.obj
+
+f.i: f.c.i
+.PHONY : f.i
+
+# target to preprocess a source file
+f.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CProject1.dir\build.make CMakeFiles/CProject1.dir/f.c.i
+.PHONY : f.c.i
+
+f.s: f.c.s
+.PHONY : f.s
+
+# target to generate assembly for a file
+f.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CProject1.dir\build.make CMakeFiles/CProject1.dir/f.c.s
+.PHONY : f.c.s
+
 main.obj: main.c.obj
 .PHONY : main.obj
 
@@ -161,6 +185,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... CProject1
+	@echo ... f.obj
+	@echo ... f.i
+	@echo ... f.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

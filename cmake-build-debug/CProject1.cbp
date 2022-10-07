@@ -74,6 +74,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/15216/Desktop/projects/C&amp;C++/CProject1/f.c">
+			<Option target="CProject1"/>
+		</Unit>
+		<Unit filename="C:/Users/15216/Desktop/projects/C&amp;C++/CProject1/h1.h">
+			<Option target="CProject1"/>
+		</Unit>
 		<Unit filename="C:/Users/15216/Desktop/projects/C&amp;C++/CProject1/main.c">
 			<Option target="CProject1"/>
 		</Unit>

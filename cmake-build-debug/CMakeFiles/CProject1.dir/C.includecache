@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/15216/Desktop/projects/C&C++/CProject1/f.c
+h1.h
+C:/Users/15216/Desktop/projects/C&C++/CProject1/h1.h
+stdio.h
+-
+
+C:/Users/15216/Desktop/projects/C&C++/CProject1/h1.h
+
 C:/Users/15216/Desktop/projects/C&C++/CProject1/main.c
 stdio.h
 -
@@ -13,4 +21,6 @@ stdlib.h
 -
 string.h
 -
+h1.h
+C:/Users/15216/Desktop/projects/C&C++/CProject1/h1.h
 

@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/CProject1.dir/f.c.obj"
   "CMakeFiles/CProject1.dir/main.c.obj"
   "CProject1.exe"
   "CProject1.exe.manifest"
