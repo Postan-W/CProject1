@@ -124,7 +124,7 @@ void trial_on_sizeof(){
     printf("此时h的值:%d\n",h);
     printf("sizeof(int):%d\n",sizeof(int));
     /*sizeof是根据类型来判断内存占用大小的，以int a[5]为例，sizeof(a)为20；但是将a以参数形式传给函数，
-     * 在函数内部使用sizeof(a)，那么结果是4(64位系统为8，这和sizeof函数本身机制有关)，原因是此时a被看做int指针类型，因为数组变量a本身就是指向数组第一个元素
+     * 在函数内部使用sizeof(a)，那么结果是4(64位系统为8，这和sizeof函数本身机制有关)，原因是此时a被编译器看做int指针类型，因为数组变量a本身就是指向数组第一个元素
      * 的指针
      */
     int a[] = {1,2,3,4,5};
@@ -201,12 +201,16 @@ void operation_on_point() {
     printf("p4=%p\n",p5);//增加了4
 
 }
-
+void get_and_put(){
+    //重提一遍，赋值操作的返回值即是左边变量被赋的那个值
+    //EOF代表文件结束，是stdio.h中定义的一个宏
+    int c;
+    while((c = getchar()) != EOF){
+        putchar(c);
+    }
+}
 void trial_on_malloc(){
-    /*malloc返回类型是void*即void指针，申请的内存大小是以字节为单位的
-     *
-     *
-     */
+    /*malloc返回类型是void*即void指针，申请的内存大小是以字节为单位的*/
     int *p = (int*)malloc(3*sizeof(int));//连续内存空间
     for(int i=0;i<3;i++){
         scanf("%d",&p[i]);
@@ -314,10 +318,28 @@ void trial_on_static(void){
     static int a = 1;
     printf("%s:a=%d\n",__func__ ,a++);
 }
+void you_see(){
+    printf("指定打印长度和小数点位数:%10.2f",18.334);
+}
+//理解指向指针的指针是水到渠成地，并没有引入新的知识
+void point2point(){
+    int a[] = {1,2,3,4,5};
+    int *p = a;
+    int **p2p = &p;//p2p的初始化是p的地址。这句话的意思是指向一个指向int类型对象的指针的指针
+    printf("p2p的值即为指针p的地址:%p\n",p2p);
+    //同样地，*就是用来从目标地址取值
+    printf("所以*p2p就等同于p的值。p的值为p:%p;*p2p的值为:%p\n",p,*p2p);
+    printf("**p2p的值也就相当于*p,也就是a[0]。a[0]的值为:%d;*p的值为:%d;**p2p的值为:%d\n",a[0],*p,**p2p);
+}
+//函数名是一个函数指针常量,函数名的值为函数地址。调用方式为(*function_point)(10)或function_point(10)
+void function_point(int x){
+    printf("函数名本身是一个指针常量\n");
+    printf("传入的参数值为:%d\n",x);
+}
+void (*fp)(int);//声明一个指向同样参数和返回值的函数指针变量。fp = function_point;fp(10);
+//在C语言中function_point和&function_point是一样的，都是这个函数的地址
 int main(int argc,char const *argv[]) {
-    int a = 10;
-    int b =15;
-    max_a_b(a,b);
+
     return 0;
 }
 
